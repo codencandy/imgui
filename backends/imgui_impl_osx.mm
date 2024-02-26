@@ -88,7 +88,7 @@ static ImGui_ImplOSX_Data*      ImGui_ImplOSX_CreateBackendData()   { return IM_
 static ImGui_ImplOSX_Data*      ImGui_ImplOSX_GetBackendData()      { return (ImGui_ImplOSX_Data*)ImGui::GetIO().BackendPlatformUserData; }
 static void                     ImGui_ImplOSX_DestroyBackendData()  { IM_DELETE(ImGui_ImplOSX_GetBackendData()); }
 
-static inline CFTimeInterval    GetMachAbsoluteTimeInSeconds()      { return (CFTimeInterval)(double)(clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1e9); }
+static inline CFTimeInterval    GetMachAbsoluteTimeInSecondsOsx()      { return (CFTimeInterval)(double)(clock_gettime_nsec_np(CLOCK_UPTIME_RAW) / 1e9); }
 
 // Forward Declarations
 static void ImGui_ImplOSX_AddTrackingArea(NSView* _Nonnull view);
@@ -612,9 +612,9 @@ void ImGui_ImplOSX_NewFrame(NSView* view)
 
     // Setup time step
     if (bd->Time == 0.0)
-        bd->Time = GetMachAbsoluteTimeInSeconds();
+        bd->Time = GetMachAbsoluteTimeInSecondsOsx();
 
-    double current_time = GetMachAbsoluteTimeInSeconds();
+    double current_time = GetMachAbsoluteTimeInSecondsOsx();
     io.DeltaTime = (float)(current_time - bd->Time);
     bd->Time = current_time;
 
